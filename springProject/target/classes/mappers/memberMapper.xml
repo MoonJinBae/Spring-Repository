@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+  
+  <mapper namespace="com.myweb.www.repository.MemberDAO">
+  
+  	<insert id="register">
+  		insert into member(email, pwd, nick_name) values(#{email}, #{pwd}, #{nickName})
+  	</insert>
+  	
+  	<insert id="insertAuthInit">
+		insert into auth_member values(#{email}, 'ROLE_USER')
+  	</insert>
+  	
+  	<select id="selectEmail" resultType="mvo">
+  		select * from member where email = #{email}
+  	</select>
+  	
+  	<select id="selectAuths" resultType="com.myweb.www.security.AuthVO">
+  		select * from auth_member where email = #{email}
+  	</select>
+	
+	<update id="updateLastLogin">
+		update member set last_login = now() where email = #{email}
+	</update>
+	
+	<select id="getMemberList" resultType="mvo">
+		select * from member
+	</select>
+	
+	<select id="getMember" resultType="mvo">
+		select * from member where email = #{email}
+	</select>
+	
+	<update id="modify">
+		update member set pwd=#{pwd}, nick_name = #{nickName} where email = #{email}
+	</update>
+	
+	<delete id="remove">
+		delete m, auth from member m join auth_member auth using(email)
+		where email = #{email}
+	</delete>
+	
+  </mapper>

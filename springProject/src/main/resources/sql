@@ -1,0 +1,54 @@
+2023-10-18
+DB생성
+use springdb
+
+create table board(
+bno bigint not null auto_increment primary key,
+title varchar(200) not null,
+content text not null,
+writer varchar(100) not null,
+reg_at datetime default now(),
+mod_at datetime default now(),
+read_count int default 0,
+cmt_qty int default 0,
+has_file int default 0);
+
+2023-10-20
+create table comment(
+cno bigint auto_increment primary key,
+bno bigint not null,
+writer varchar(100) not null,
+content text not null,
+reg_at datetime default now(),
+mod_at datetime default now(),
+constraint fk_comment foreign key(bno) references board(bno) on delete cascade);
+
+2023-10-24
+create table file(
+uuid varchar(256) primary key,
+save_dir varchar(256) not null,
+file_name varchar(256) not null,
+file_type tinyint(1) default 0,
+bno bigint,
+file_size int,
+reg_date datetime default now(),
+constraint fk_bno foreign key(bno) references board(bno) on delete cascade);
+
+2023-10-27
+create table member(
+email varchar(100) primary key,
+pwd varchar(1000) not null,
+nick_name varchar(100) not null,
+reg_at datetime default now(),
+last_login datetime);
+
+create table auth_member(
+email varchar(100) primary key,
+auth varchar(500) not null,
+constraint fk_auth_member foreign key(email) references member(email) on delete cascade);
+
+2023-10-30
+alter table auth_member drop primary key; // auth_member 의 primary key 삭제 foreign key 삭제
+
+
+

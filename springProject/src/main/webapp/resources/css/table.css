@@ -1,0 +1,62 @@
+@charset "UTF-8";
+.table-box{
+	border:2px solid #fff;
+	border-radius: 7px;
+	padding:15px;
+	background-color: #343a40;
+	max-height:600px;
+	overflow: scroll;
+}
+.table-box::-webkit-scrollbar {
+    display: none; /* 크롬, 사파리, 오페라, 엣지 */
+}
+#table>tbody>tr>th{
+	background-color: #343a40;
+	text-align: center;
+}
+#table>tbody>tr>td{
+	text-align: center;
+	background-color: #343a40;
+	cursor: pointer;
+}
+#table>tbody>tr>td>a{
+	text-decoration: none;
+	color:#fff;
+}
+
+#table>tbody>tr{
+	border-bottom:1px solid #fff;
+	border-radius: 5px;
+}
+
+#button, #cmtPostBtn, #modBtn, #delBtn{
+	color:#fff;
+}
+.paging-box{
+	margin-top:15px;
+	display: flex;
+	justify-content: center;
+}
+.search-box{
+	display: flex;
+	flex-direction: row;
+	justify-content: center;
+	align-items: center;
+	margin-bottom: 15px;
+}
+.search-box>div:nth-child(2) {
+	margin-left: 10px;
+	margin-right: 10px;
+}
+
+
+
+
+
+
+
+
+
+
+
+

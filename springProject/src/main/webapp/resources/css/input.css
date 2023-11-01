@@ -1,0 +1,36 @@
+@charset "UTF-8";
+.header-container{
+	background-color:#212529;
+	color:#fff;
+	margin-left: 50px;
+}
+.navbar{
+	margin-left:50px;
+}
+.title{
+	margin-bottom: 16px;
+	color:#fff;
+}
+.all-container{
+	width: 100%;
+	height: 100vh;
+	background-color:#212529;
+}
+
+.input-box{
+	width: 500px;
+	border: 1px solid #fff;
+	border-radius: 5px;
+	padding: 15px;
+	box-sizing: border-box;
+	background-color: #343a40;
+}
+
+.button-box{
+	margin-top:15px;
+	display: flex;
+	justify-content: center;
+}
+
+
+
