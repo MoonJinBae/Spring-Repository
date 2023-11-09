@@ -1,0 +1,51 @@
+-- 2023-11-02
+create table member(
+email varchar(100) primary key,
+pwd varchar(1000) not null,
+nick_name varchar(100) not null,
+reg_date datetime default now(),
+last_login datetime);
+
+create table auth_member(
+email varchar(100) not null,
+auth varchar(500) default 'ROLE_USER',
+constraint fk_auth_member_email foreign key(email) references member(email) on delete cascade on update cascade);
+
+-- 2023-11-03
+CREATE TABLE `notice`.`board` (
+  `bno` INT NOT NULL,
+  `writer` VARCHAR(100) NOT NULL,
+  `title` VARCHAR(500) NOT NULL,
+  `content` VARCHAR(1000) NULL,
+  `reg_date` DATETIME NULL DEFAULT CURRENT_TIMESTAMP,
+  `mod_date` DATETIME NULL DEFAULT CURRENT_TIMESTAMP,
+  PRIMARY KEY (`bno`));
+
+-- 2023-11-06
+Table: file
+Columns:
+uuid varchar(500) PK 
+save_dir varchar(500) 
+file_name varchar(500) 
+file_type tinyint(1) 
+bno int
+file_size bigint 
+reg_date datetime
+
+alter table file add constraint fk_file_bno foreign key(bno) references board(bno) on delete cascade;
+
+--2023-11-07
+CREATE TABLE `notice`.`comment` (
+  `cno` INT NOT NULL,
+  `bno` INT NOT NULL,
+  `writer` VARCHAR(100) NOT NULL,
+  `content` VARCHAR(500) NULL,
+  `reg_date` DATETIME NULL DEFAULT now(),
+  `mod_date` DATETIME NULL DEFAULT now(),
+  PRIMARY KEY (`cno`),
+  INDEX `fk_comment_bno_idx` (`bno` ASC) VISIBLE,
+  CONSTRAINT `fk_comment_bno`
+    FOREIGN KEY (`bno`)
+    REFERENCES `notice`.`board` (`bno`)
+    ON DELETE CASCADE
+    ON UPDATE NO ACTION);

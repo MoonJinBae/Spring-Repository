@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+  
+  <mapper namespace="com.moon.www.repository.BoardDAO">
+  
+  	<insert id="register">
+  		insert into board(writer, title, content) values(#{writer}, #{title}, #{content})
+  	</insert>
+  
+  	<select id="getBoardList" resultType="bvo">
+  		select * from board b
+  		left join (select bno, count(bno) cmtCount from comment group by bno) c using(bno)
+  		left join (select bno, count(bno) fileCount from file group by bno) f using(bno)
+  		<include refid="search"></include>
+  		order by bno desc limit #{pageStart}, #{qty}
+	</select>
+	
+  	<select id="getTotalCount" resultType="int">
+  		select count(bno) from board
+  		<include refid="search"></include>
+  	</select>
+  
+  	<update id="upHit">
+  		update board set hit = hit + 1 where bno = #{bno}
+  	</update>
+  
+  	<select id="getBvo" resultType="bvo">
+  		select * from board where bno = #{bno}
+  	</select>
+  
+  	<update id="Modify">
+  		update board set title = #{title}, content = #{content}, mod_date = now()
+  		where bno = #{bno}
+  	</update>
+  
+  	<delete id="remove">
+  		delete from board where bno = #{bno}
+  	</delete>
+  	
+	<select id="getBno" resultType="int">
+		select max(bno) from board
+	</select>
+  
+  
+  
+  	<sql id="search">
+  		<if test="type != null">
+	  		<trim prefix="WHERE" prefixOverrides="OR">
+		  		<foreach collection="typeToArray" item="type">
+		  			<trim prefix="OR">
+			  			<choose>
+			  				<when test="type == 't'.toString()">
+			  					title like concat('%', #{keyword}, '%')
+			  				</when>
+			  				<when test="type == 'w'.toString()">
+			  					writer like concat('%', #{keyword}, '%')
+			  				</when>
+			  				<when test="type == 'c'.toString()">
+			  					content like concat('%', #{keyword}, '%')
+			  				</when>
+			  			</choose>
+		  			</trim>
+		  		</foreach>
+	  		</trim>
+  		</if>
+  	</sql>
+  	
+  </mapper>
